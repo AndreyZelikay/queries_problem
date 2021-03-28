@@ -1,11 +1,10 @@
 package by.itechart.queries_problem.db_queries_benchmark;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,9 +16,12 @@ import java.util.Properties;
 
 @Component
 @Getter
+@RequiredArgsConstructor
 public class ConnectionsHolder {
 
     private final String dbConnectionConfigPath = "/db_connection_properties";
+
+    private final LiquibaseWrapper liquibaseWrapper;
 
     private final Map<DB, Connection> dbConnectionMap = new HashMap<>();
 
@@ -41,6 +43,8 @@ public class ConnectionsHolder {
                         properties.getProperty("username"),
                         properties.getProperty("password")
                 );
+
+                liquibaseWrapper.rollupDBMigrations(connection);
             } catch (SQLException | IOException throwables) {
                 throw new RuntimeException(throwables);
             }

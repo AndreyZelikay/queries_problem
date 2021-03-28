@@ -1,0 +1,120 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: azelikau
+      comment: "create schema"
+      changes:
+        - sql:
+            sql: create schema if not exists queries_benchmark
+
+  - changeSet:
+      id: 2
+      author: azelikau
+      comment: "create table company"
+      changes:
+        - createTable:
+            schemaName: queries_benchmark
+            tableName: company
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: azelikau
+      comment: "create table employee"
+      changes:
+        - createTable:
+            schemaName: queries_benchmark
+            tableName: employee
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: position
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: company_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_employee_company
+                    references: queries_benchmark.company(id)
+
+  - changeSet:
+      id: 4
+      author: azelikau
+      comment: "create table project"
+      changes:
+        - createTable:
+            schemaName: queries_benchmark
+            tableName: project
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: company_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_project_company
+                    references: queries_benchmark.company(id)
+  - changeSet:
+      id: 5
+      author: azelikau
+      comment: "create table employee_project"
+      changes:
+        - createTable:
+            schemaName: queries_benchmark
+            tableName: employee_project
+            columns:
+              - column:
+                  name: employee_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_employee_project_employee
+                    references: queries_benchmark.employee(id)
+              - column:
+                  name: project_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_employee_project_project
+                    references: queries_benchmark.project(id)

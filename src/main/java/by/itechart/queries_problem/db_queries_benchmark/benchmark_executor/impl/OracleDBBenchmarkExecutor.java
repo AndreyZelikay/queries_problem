@@ -11,14 +11,13 @@ import java.sql.*;
 
 @Component
 @RequiredArgsConstructor
-public class ORACLEDBBenchmarkExecutor implements BenchmarkExecutor {
+public class OracleDBBenchmarkExecutor implements BenchmarkExecutor {
 
     private final ConnectionsHolder connectionsHolder;
     private static final String GET_ELAPSED_TIME_BY_QUERY = "select ELAPSED_TIME from \"PUBLIC\".V$SQL where dbms_lob.compare(SQL_FULLTEXT, ?) = 0";
 
     @Override
     public BenchmarkResult executeBenchmark(String query) {
-        //TODO add oracle db
         Connection connection = connectionsHolder.getConnection(DB.POSTGRESQL);
 
         double executionTime;

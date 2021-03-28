@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
-public class MYSQLBenchmarkExecutor implements BenchmarkExecutor {
+public class MySQLBenchmarkExecutor implements BenchmarkExecutor {
 
 
     private final ConnectionsHolder connectionsHolder;

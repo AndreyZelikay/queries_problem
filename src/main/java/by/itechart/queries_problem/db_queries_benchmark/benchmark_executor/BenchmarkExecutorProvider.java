@@ -1,7 +1,7 @@
 package by.itechart.queries_problem.db_queries_benchmark.benchmark_executor;
 
 import by.itechart.queries_problem.db_queries_benchmark.DB;
-import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.MYSQLBenchmarkExecutor;
+import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.MySQLBenchmarkExecutor;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.PostgreSQLBenchmarkExecutor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +21,7 @@ public class BenchmarkExecutorProvider {
     @PostConstruct
     private void init(){
         executorMap.put(DB.POSTGRESQL, applicationContext.getBean(PostgreSQLBenchmarkExecutor.class));
-        executorMap.put(DB.MYSQL, applicationContext.getBean(MYSQLBenchmarkExecutor.class));
+        executorMap.put(DB.MYSQL, applicationContext.getBean(MySQLBenchmarkExecutor.class));
     }
 
     public Map<DB, BenchmarkExecutor> getExecutorMap() {
