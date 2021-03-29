@@ -8,10 +8,7 @@ import by.itechart.queries_problem.exception.SQLExceptionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +26,8 @@ public class PostgreSQLBenchmarkExecutor implements BenchmarkExecutor {
 
         double executionTime;
 
-        try(Statement statement = connection.createStatement()){
-            ResultSet rs = statement.executeQuery("explain analyze " + query);
+        try(PreparedStatement statement = connection.prepareStatement("explain analyze " + query)){
+            ResultSet rs = statement.executeQuery();
 
             StringBuilder resultString = new StringBuilder();
 

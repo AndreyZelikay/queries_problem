@@ -8,10 +8,7 @@ import by.itechart.queries_problem.exception.SQLExceptionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +27,8 @@ public class MySQLBenchmarkExecutor implements BenchmarkExecutor {
 
         double executionTime;
 
-        try(Statement statement = connection.createStatement()){
-            ResultSet rs = statement.executeQuery("explain analyze " + query);
+        try(PreparedStatement statement = connection.prepareStatement("explain analyze " + query)){
+            ResultSet rs = statement.executeQuery();
             rs.next();
 
             Matcher matcher = MYSQL_EXECUTION_TIME_PATTERN.matcher(rs.getString(1));
