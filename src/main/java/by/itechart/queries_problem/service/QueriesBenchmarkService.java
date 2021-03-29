@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface QueriesBenchmarkService {
 
-    Map<String, BenchmarkResult> executeBenchmarks(String query);
+    Map<String, BenchmarkResult> executeBenchmarks(String query, Integer numberOfRepetitions);
 
 }

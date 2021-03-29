@@ -16,8 +16,9 @@ public class QueriesBenchmarkController {
     private final QueriesBenchmarkService queriesBenchmarkService;
 
     @GetMapping
-    public Map<String, BenchmarkResult> getResult(@RequestParam("query") String query) {
-        return queriesBenchmarkService.executeBenchmarks(query);
+    public Map<String, BenchmarkResult> getResult(@RequestParam("query") String query,
+                                                  @RequestParam(value = "numberOfRepetitions", required = false) Integer numberOfRepetitions) {
+        return queriesBenchmarkService.executeBenchmarks(query, numberOfRepetitions);
     }
 }
 
