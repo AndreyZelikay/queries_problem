@@ -1,5 +1,7 @@
 package by.itechart.queries_problem.db_queries_benchmark;
 
+import by.itechart.queries_problem.exception.ReadDBPropertiesException;
+import by.itechart.queries_problem.exception.SQLExceptionWrapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -45,10 +47,11 @@ public class ConnectionsHolder {
                 );
 
                 liquibaseWrapper.rollupDBMigrations(connection);
-            } catch (SQLException | IOException throwables) {
-                throw new RuntimeException(throwables);
+            } catch (SQLException e) {
+                throw new SQLExceptionWrapper(e, db);
+            } catch (IOException e) {
+                throw new ReadDBPropertiesException(e);
             }
-
             dbConnectionMap.put(db, connection);
         }
     }

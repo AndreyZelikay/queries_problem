@@ -4,6 +4,8 @@ import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
 import by.itechart.queries_problem.db_queries_benchmark.ConnectionsHolder;
 import by.itechart.queries_problem.db_queries_benchmark.DB;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.BenchmarkExecutor;
+import by.itechart.queries_problem.exception.BenchmarkResultParseException;
+import by.itechart.queries_problem.exception.SQLExceptionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -39,10 +41,15 @@ public class H2DBBenchmarkExecutor implements BenchmarkExecutor {
             if (rs.next()) {
                 executionTime = Double.parseDouble(rs.getString("AVERAGE_EXECUTION_TIME"));
             } else {
-                throw new RuntimeException();
+                throw new BenchmarkResultParseException(query, DB.H2DB);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            try {
+                connection.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            throw new SQLExceptionWrapper(e, DB.H2DB);
         }
 
         return new BenchmarkResult(executionTime);
