@@ -50,13 +50,11 @@ databaseChangeLog:
                   name: name
                   type: varchar(50)
                   constraints:
-                    unique: true
                     nullable: false
               - column:
                   name: position
                   type: varchar(50)
                   constraints:
-                    unique: true
                     nullable: false
               - column:
                   name: company_id
@@ -86,7 +84,6 @@ databaseChangeLog:
                   name: name
                   type: varchar(50)
                   constraints:
-                    unique: true
                     nullable: false
               - column:
                   name: company_id
@@ -118,3 +115,12 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_employee_project_project
                     references: queries_benchmark.project(id)
+
+  - changeSet:
+      id: 6
+      author: azelikau
+      comment: "initial data insertion"
+      changes:
+        - sqlFile:
+            path: db/changelog/data.sql
+            stripComments: true
