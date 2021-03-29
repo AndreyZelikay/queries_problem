@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum DB {
     POSTGRESQL("PostgreSQL"),
-    MYSQL("MySQL");
-    //ORACLEDB("OracleDB");
+    MYSQL("MySQL"),
+    H2DB("H2DB");
 
     private final String simpleName;
 }

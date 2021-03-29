@@ -1,6 +1,7 @@
 package by.itechart.queries_problem.db_queries_benchmark.benchmark_executor;
 
 import by.itechart.queries_problem.db_queries_benchmark.DB;
+import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.H2DBBenchmarkExecutor;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.MySQLBenchmarkExecutor;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl.PostgreSQLBenchmarkExecutor;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class BenchmarkExecutorProvider {
     private void init(){
         executorMap.put(DB.POSTGRESQL, applicationContext.getBean(PostgreSQLBenchmarkExecutor.class));
         executorMap.put(DB.MYSQL, applicationContext.getBean(MySQLBenchmarkExecutor.class));
+        executorMap.put(DB.H2DB, applicationContext.getBean(H2DBBenchmarkExecutor.class));
     }
 
     public Map<DB, BenchmarkExecutor> getExecutorMap() {

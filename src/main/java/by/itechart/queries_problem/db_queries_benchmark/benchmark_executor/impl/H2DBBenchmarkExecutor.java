@@ -11,26 +11,33 @@ import java.sql.*;
 
 @Component
 @RequiredArgsConstructor
-public class OracleDBBenchmarkExecutor implements BenchmarkExecutor {
+public class H2DBBenchmarkExecutor implements BenchmarkExecutor {
 
     private final ConnectionsHolder connectionsHolder;
-    private static final String GET_ELAPSED_TIME_BY_QUERY = "select ELAPSED_TIME from \"PUBLIC\".V$SQL where dbms_lob.compare(SQL_FULLTEXT, ?) = 0";
+    private static final String GET_AVERAGE_EXECUTION_TIME_BY_SQL_STATEMENT =
+            "select AVERAGE_EXECUTION_TIME from INFORMATION_SCHEMA.QUERY_STATISTICS where SQL_STATEMENT = ?";
+    private static final String SET_STATISTICS = "set query_statistics true";
 
     @Override
     public BenchmarkResult executeBenchmark(String query) {
-        Connection connection = connectionsHolder.getConnection(DB.POSTGRESQL);
+        Connection connection = connectionsHolder.getConnection(DB.H2DB);
 
         double executionTime;
 
         try (Statement statement = connection.createStatement();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ELAPSED_TIME_BY_QUERY)) {
-            statement.executeQuery(query);
+             PreparedStatement queryStatement = connection.prepareStatement(query);
+             PreparedStatement averageTimeStatement = connection.prepareStatement(GET_AVERAGE_EXECUTION_TIME_BY_SQL_STATEMENT)) {
 
-            preparedStatement.setString(1, query);
-            ResultSet rs = preparedStatement.executeQuery();
+            statement.executeUpdate(SET_STATISTICS);
+
+            queryStatement.executeQuery();
+
+            averageTimeStatement.setString(1, query);
+
+            ResultSet rs = averageTimeStatement.executeQuery();
 
             if (rs.next()) {
-                executionTime = Long.parseLong(rs.getString("ELAPSED_TIME")) / 1000.;
+                executionTime = Double.parseDouble(rs.getString("AVERAGE_EXECUTION_TIME"));
             } else {
                 throw new RuntimeException();
             }

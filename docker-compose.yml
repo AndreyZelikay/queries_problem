@@ -30,3 +30,10 @@ services:
       - "3306"
     environment:
      MYSQL_ROOT_PASSWORD: root
+
+  h2db:
+    image: buildo/h2database:latest
+    container_name: h2db
+    hostname: h2db
+    ports:
+    - "1521"
