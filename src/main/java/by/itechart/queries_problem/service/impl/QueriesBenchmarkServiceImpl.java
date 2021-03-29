@@ -1,6 +1,6 @@
 package by.itechart.queries_problem.service.impl;
 
-import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
+import by.itechart.queries_problem.service.model.BenchmarkResult;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.BenchmarkExecutorProvider;
 import by.itechart.queries_problem.service.QueriesBenchmarkService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class QueriesBenchmarkServiceImpl implements QueriesBenchmarkService {
                         dbBenchmarkExecutorEntry -> dbBenchmarkExecutorEntry.getKey().getSimpleName(),
                         dbBenchmarkExecutorEntry ->
                                 new BenchmarkResult(IntStream.range(0, numberOfRepetitions == null ? defaultNumberOfRepetitions : numberOfRepetitions)
-                                        .mapToDouble(i -> dbBenchmarkExecutorEntry.getValue().executeBenchmark(query).getExecutionTimeInMillis())
+                                        .mapToDouble(i -> dbBenchmarkExecutorEntry.getValue().executeBenchmark(query))
                                         .average().orElse(0)
                                 )
                 ));

@@ -1,6 +1,6 @@
 package by.itechart.queries_problem.service;
 
-import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
+import by.itechart.queries_problem.service.model.BenchmarkResult;
 
 import java.util.Map;
 

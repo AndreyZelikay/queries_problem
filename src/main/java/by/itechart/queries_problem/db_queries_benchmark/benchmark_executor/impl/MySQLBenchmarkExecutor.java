@@ -1,6 +1,5 @@
 package by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl;
 
-import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
 import by.itechart.queries_problem.db_queries_benchmark.ConnectionsHolder;
 import by.itechart.queries_problem.db_queries_benchmark.DB;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.BenchmarkExecutor;
@@ -26,7 +25,7 @@ public class MySQLBenchmarkExecutor implements BenchmarkExecutor {
             Pattern.compile("actual time=[\\d.]+?\\.\\.(?<executionTime>[\\d.]+) rows");
 
     @Override
-    public BenchmarkResult executeBenchmark(String query) {
+    public double executeBenchmark(String query) {
         Connection connection = connectionsHolder.getConnection(DB.MYSQL);
 
         double executionTime;
@@ -51,6 +50,6 @@ public class MySQLBenchmarkExecutor implements BenchmarkExecutor {
             throw new SQLExceptionWrapper(e, DB.MYSQL);
         }
 
-        return new BenchmarkResult(executionTime);
+        return executionTime;
     }
 }

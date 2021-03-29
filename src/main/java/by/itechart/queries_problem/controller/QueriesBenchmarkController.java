@@ -1,6 +1,6 @@
 package by.itechart.queries_problem.controller;
 
-import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
+import by.itechart.queries_problem.service.model.BenchmarkResult;
 import by.itechart.queries_problem.service.QueriesBenchmarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

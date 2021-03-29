@@ -1,4 +1,4 @@
-package by.itechart.queries_problem.db_queries_benchmark;
+package by.itechart.queries_problem.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

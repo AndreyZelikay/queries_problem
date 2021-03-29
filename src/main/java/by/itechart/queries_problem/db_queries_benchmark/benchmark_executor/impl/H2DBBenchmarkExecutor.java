@@ -1,6 +1,5 @@
 package by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.impl;
 
-import by.itechart.queries_problem.db_queries_benchmark.BenchmarkResult;
 import by.itechart.queries_problem.db_queries_benchmark.ConnectionsHolder;
 import by.itechart.queries_problem.db_queries_benchmark.DB;
 import by.itechart.queries_problem.db_queries_benchmark.benchmark_executor.BenchmarkExecutor;
@@ -21,7 +20,7 @@ public class H2DBBenchmarkExecutor implements BenchmarkExecutor {
     private static final String SET_STATISTICS = "set query_statistics true";
 
     @Override
-    public BenchmarkResult executeBenchmark(String query) {
+    public double executeBenchmark(String query) {
         Connection connection = connectionsHolder.getConnection(DB.H2DB);
 
         double executionTime;
@@ -52,6 +51,6 @@ public class H2DBBenchmarkExecutor implements BenchmarkExecutor {
             throw new SQLExceptionWrapper(e, DB.H2DB);
         }
 
-        return new BenchmarkResult(executionTime);
+        return executionTime;
     }
 }
