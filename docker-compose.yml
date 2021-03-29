@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+
+  app:
+    build: .
+    image: queries_benchmark
+    ports:
+      - "8080:8080"
+    container_name: queries_benchmark
+    depends_on:
+      - postgres
+      - mysql
+
+  postgres:
+    image: postgres:13.1-alpine
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    hostname: mysql
+    ports:
+      - "3306"
+    environment:
+     MYSQL_ROOT_PASSWORD: root
