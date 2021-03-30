@@ -7,4 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class BenchmarkResult {
     private double executionTimeInMillis;
+    private Integer returnedRowsCount;
+    private Integer updatedRowsCount;
+    private int numberOfRepetitions;
 }
